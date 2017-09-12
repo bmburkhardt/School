@@ -1,0 +1,205 @@
+\documentclass[12pt]{elsart}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{program}
+\newcommand{\field}[1]{\mathbb{#1}}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+%\vspace{10 mm}
+
+\begin{document}
+
+\pagestyle{empty}
+Bryan Burkhardt - XMV643\\
+CS3343 Section 01\\
+02 Sep 2017\\
+
+\begin{center}
+\Large  CS3343 Analysis of Algorithms Fall 2017 \\
+\large {\bf Homework 1}\\
+\normalsize Due 9/8/17 before 11:59pm
+\end{center}
+
+Justify all of your answers with comments/text in order to receive full credit.  Completing the assignment in Latex will earn you extra credit on Midterm 1.
+
+{\bf 1. Sorting (8 points)}
+
+Consider the sorting algorithm below which
+sorts the array $A[1\ldots n]$ into increasing order by repeatedly bubbling the
+minimum element of the remaining array to the left.
+
+\begin{algorithm}
+\caption{mysterysort(int $A[1\ldots n]$)}
+ \begin{algorithmic}
+ %
+ \State $i = 1$;
+ \While{$i<=n$}
+ \State //(I) The elements in $A[1 \ldots (i-1)]$  of the array are in sorted order and are all smaller than the elements in $A[i \ldots n]$
+    \State $k = n$;
+    \While{$(k >= i+1)$}
+	\State //Inner while loop moves the smallest element in $A[i \ldots n]$ to $A[i]$
+          \If{$A[k-1]>A[k]$}
+              \State swap $A[k]$ with $A[k-1]$
+          \EndIf
+       \State $k--$;
+     \EndWhile
+    \State $i++$;
+  \EndWhile
+\end{algorithmic}
+\end{algorithm}
+
+\begin{enumerate}
+   \item (2 points) Consider running the above sort on the array $[5,3,1,4,2]$.  Show the sequence of changes which the algorithm makes to the array.\\ 
+$[5,3,1,{\bf 4,2}]\rightarrow$ Swap\\
+$[5,3,{\bf 1,2},4]\rightarrow$ Continue\\
+$[5,{\bf 3,1},2,4]\rightarrow$ Swap\\
+$[{\bf 5,1},3,2,4]\rightarrow$ Swap\\
+$[1,5,3,2,4]         \rightarrow$ End of first iteration\\
+$[1,5,3,{\bf 2,4}]\rightarrow$ Continue\\
+$[1,5,{\bf 3,2},4]\rightarrow$ Swap\\
+$[1,{\bf 5,2},3,4]\rightarrow$ Swap\\
+$[1,2,5,3,4]         \rightarrow$ End of second iteration\\
+$[1,2,5,{\bf 3,4}]\rightarrow$ Continue\\
+$[1,2,{\bf 5,3},4]\rightarrow$ Swap\\
+$[1,2,3,5,4]         \rightarrow$ End of third iteration\\
+$[1,2,3,{\bf 5,4}]\rightarrow$ Swap\\
+$[1,2,3,4,5]         \rightarrow$ Sorted\\
+  \item (4 points) Use induction to prove the loop invariant (I) is true and then use this to prove the correctness of the algorithm.  Specifically complete the following:
+\begin{enumerate}
+   \item {\bf Base case:}\\\\
+	{\bf Solution:}\\
+	$i = 1$\\ 
+	$A[1\ldots (i-1)] = A[1\ldots 0]$ = [  ]\\ 
+	$A[i \ldots n] = [5,3,1,4,2]$\\ 
+	Base case holds true since $A[1\ldots (i-1)]$ = [  ] is sorted and\\
+	$A[1\ldots (i-1)]$ = [  ] $<$ $A[i \ldots n] = [5,3,1,4,2]$\\
+  \item {\bf Inductive step:}\\ 
+	({\bf Hint:} you can assume that the inner loop moves the smallest element in $A[i \ldots n]$ to $A[i]$)\\\\
+	{\bf Solution:}\\
+	{\bf Assume:} The elements in $A[1 \ldots (i_{old}-1)]$  of the array are in sorted order and are all smaller than the elements in $A[i \ldots n]$\\ \\
+	{\bf Prove:} The elements in $A[1 \ldots (i_{new}-1)]$  of the array are in sorted order and are all smaller than the elements in $A[i \ldots n]$\\\\
+	$i_{new} = i_{old}+1$\\
+	$A[1 \ldots (i_{new}-1)]$\\
+	$=A[1 \ldots (i_{old}+1-1)]$\\
+	$=A[1 \ldots (i_{old})]$\\\\
+	Therefore, because the inner loop moves the smallest element in $A[i_{old} \ldots n]$ to $A[i_{old}], A[1 \ldots i_{old}]$ will always be sorted and smaller than elements in $A[i \ldots n].$ Because the loop invariant states the elements in the sorted part of the array are less than the elements in the unsorted part, $i_{new}$ will always be greater than $i_{old}.$\\
+
+\newpage
+   \item {\bf Termination step:}\\\\
+	{\bf Solution:}\\
+	The loop terminates when $i <= n$ is false. Therefore $i > n$ when we fall out of the loop. $i = n + 1$ when we leave the loop. If we plug $i$ into the loop invariant $A[1 \ldots (i-1)]$ which is sorted we get $A[1 \ldots (n+1)-1] = A[1 \ldots n]$ which is sorted by the loop invariant. Thus, the algorithm is correct.\\
+\end{enumerate}
+   \item (2 points) Give the best-case and worst-case runtimes of this sort in asymptotic (i.e., $O$) notation.
+\end{enumerate}
+
+\vspace*{0.5cm}
+
+
+{\bf 2. Asymptotic Notation (8 points)}\\
+Show the following using the definitions of $O$, $\Omega$, and $\Theta$.
+
+\begin{enumerate}
+   \item (2 points) $2n^3+n^2+4\in \Theta(n^3)$\\
+	{\bf Solution:}
+	\begin{itemize}
+	\item Show $O: 2n^3 + n^2 +4 <= cn^3$\\
+		$2n^3+n^2+4 <= 2n^3+{\bf (n)}n^2+4 \hfill n>=1$\\
+		$3n^3+4 <= 3n^3+{\bf (n^3)} \hfill n>= \sqrt[3]{4}$\\
+		$4n^3 <= cn^3 \hfill c=4, n>=\sqrt[3]{4}$\\
+	\item Show $\Omega: 2n^3+n^2+4 >= cn^3$\\
+		$2n^3+n^2+4{\bf (-4)} >= 2n^3+n^2$\\
+		$2n^3+n^2{\bf (-n^2)} >= 2n^3$\\
+		$2n^3 >= cn^3 \hfill c=2, n>=0$\\\\
+	Therefore $2n^3+n^2+4\in \Theta(n^3)$\\
+	\end{itemize}
+   \item (2 points) $3n^4-9n^2+4n\in \Theta(n^4)$\\  ({\bf Hint:} careful with the negative number)\\
+	{\bf Solution:}
+	\begin{itemize}
+	\item Show $O: 3n^4-9n^2+4n <= cn^4$\\
+		$3n^4-9n^2+4n <= 3n^4-9n^2+{\bf (n^3)}n \hfill n>=\sqrt[3]{4}$\\
+		$4n^4-9n^2 <= 4n^4-9n^2{\bf (+9n^2)}$\\
+		$4n^4 <= cn^4 \hfill c=4, n>=\sqrt[3]{4}$\\\\
+	\item Show $\Omega: 3n^4-9n^2+4n >= cn^4$\\
+		$3n^4-9n^2+4n >= 3n^4-9n^2+4n{\bf (-4n)}$\\
+		$3n^4-9n^2 >= 3n^4-{\bf (n^2)}n^2 \hfill n>=3$\\
+		$2n^4 >= cn^4 \hfill c=2, n>=3$\\\\
+	Therefore $3n^4-9n^2+4n\in \Theta(n^4)$\\
+	\end{itemize}
+   \item (4 points) Suppose $f(n)\in O(g_1(n))$ and $f(n)\in O(g_2(n))$.  Which of the following are true?  Justify your answers using the definition of $O$.  Give a counter example if it is false.
+\begin{enumerate}
+   \item $f(n)\in O( \ 5*g_1(n)+100\ )$\\
+	{\bf Solution:}\\
+	{\bf Assume:} $f(n)\in O(g_1(n)) \Leftrightarrow f(n)<=c_1g_1(n)$ for all $n >= n_1$\\
+	{\bf Prove:} $f(n) \in O(5g_1(n)+100) \Leftrightarrow f(n) <= c_3(5g_1(n)+100)$\\\\
+	$\rightarrow LHS = f(n) <= c_1g_1(n)$\\
+	$\rightarrow c_1g_1(n) <= c_15g_1(n)$\\
+	$\rightarrow c_15g_1(n) <= c_15g_1(n)+100c_1$\\
+	$\rightarrow c_15g_1(n)+100c_1 <= c_1(5g_1(n)+100) = RHS$\\
+	$\boxed{c_1(5g_1(n)+100)} \hfill \boxed{c_3=c_1, n_3=n_1}$\\\\
+	Therefore $f(n)\in O( \ 5*g_1(n)+100\ )$\\
+   \item $f(n)\in O( \ g_1(n)+g_2(n)\ )$\\
+	{\bf Solution:}\\
+	{\bf Assume:} $f(n)\in O(g_1(n)$ and $f(n)\in O(g_2(n)) \Leftrightarrow$\\
+	$ f(n) <= c_1g_1(n)$ for all $n>=n_1$ and\\ 
+	$f(n) <= c_2g_2(n)$ for all $n>=n_2$\\\\
+	{\bf Prove:} $f(n)\in O(g_1(n)+g_2(n))\Leftrightarrow f(n) <= c_3(g_1(n)+g_2(n))$\\\\
+	$\rightarrow LHS = f(n) <= c_1g_1(n)$\\
+	$\rightarrow c_1g_1(n) <= c_1g_1(n) + c_2g_2(n)$\\
+	$\rightarrow c_1g_1(n) + c_2g_2(n) <= c_1g_1(n)c_2 + c_2g_2(n)c_1$\\
+	$\rightarrow c_1g_1(n)c_2 + c_2g_2(n)c_1 = c_1c_2(g_1(n)+g_2(n))$\\
+	$\rightarrow c_1c_2(g_1(n)+g_2(n)) <= c_3(g_1(n)+g_2(n)) = RHS$\\
+	$\rightarrow \boxed{c_3(g_1(n)+g_2(n))}\hfill \boxed{c_3=c_1c_2, n_3=\max(n_1,n_2)}$\\\\
+	Therefore $f(n)\in O( \ g_1(n)+g_2(n)\ )$\\
+   \item $f(n)\in O( \ \frac{g_1(n)}{g_2(n)}\ )$\\
+	{\bf Solution:}\\
+	False. Counterexample:\\
+	$f(n)=n$\\
+	$g_1(n)=n$\\
+	$g_2(n)=n^2$\\
+	$f(n) \in g_1(n)$ and $f(n) \in g_2(n)$\\
+	$\boxed{f(n) \not\in \frac{g_1(n)}{g_2(n)}}$\\\\
+   \item $f(n)\in O( \ \max(g_1(n), g_2(n))\ )$\\
+	{\bf Solution:}\\
+	{\bf Assume:} $f(n)\in O(g_1(n)$ and $f(n)\in O(g_2(n)) \Leftrightarrow$\\
+	$ f(n) <= c_1g_1(n)$ for all $n>=n_1$ and\\ 
+	$f(n) <= c_2g_2(n)$ for all $n>=n_2$\\\\
+	{\bf Prove:} $f(n)\in O( \ \max(g_1(n), g_2(n))\ ) \Leftrightarrow f(n) <= c_3( \ \max(g_1(n), g_2(n))\ )$\\\\
+	$\rightarrow LHS = f(n) <= c_1g_1(n)$\\
+	$\rightarrow c_1g_1(n) <= \max(c_1g_1(n), c_2g_2(n))$\\
+	$\rightarrow \max(c_1g_1(n), c_2g_2(n)) <= \max(c_1g_1(n)c_2, c_2g_2(n)c_1)$\\
+	$\rightarrow \max(c_1g_1(n)c_2, c_2g_2(n)c_1) <= c_1c_2*\max(g_1(n), g_2(n))$\\
+	$\rightarrow c_1c_2*\max(g_1(n), g_2(n)) <= c_3*\max(g_1(n), g_2(n)) = RHS$\\
+	$\rightarrow \boxed{c_3( \ \max(g_1(n), g_2(n))\ )} \hfill \boxed{c_3=c_1c_2, n_3=\max(n_1,n_2)}$\\\\
+	Therefore $f(n)\in O( \ \max(g_1(n), g_2(n))\ )$\\
+\end{enumerate}
+\end{enumerate}
+
+{\bf 3. Summations (4 points)}
+
+Find the order of growth of the following sums.
+
+\begin{enumerate}
+\item $\sum\limits_{i=5}^{n} (4i+1). $\\
+	{\bf Solution:}\\\\
+	$\sum\limits_{i=5}^{n} 4i+1 $\\
+	$= \sum\limits_{i=5}^{n} 4i + \sum\limits_{i=5}^{n} 1$\\
+	$= 4 \sum\limits_{i=5}^{n} i + (n-4)$\\
+	$= 4\frac{(n+5)(n-4)}{2} + (n-4)$\\
+	$= 2(n^2+n-20) + (n-4)$\\
+	$= 2n^2+3n-44$\\
+	Therefore $\sum\limits_{i=5}^{n} (4i+1)\in \Theta(n^2)$\\\\
+
+\newpage
+
+\item $\sum\limits_{i=0}^{ \log_2 (n) } 2^i$  (for simplicity you can assume $n$ is a power of 2)
+	\\{\bf Solution:}\\\\
+	$\sum\limits_{i=0}^{ \log_2 (n) } 2^i = 2^0+2^1+2^2+\ldots+2^{\log_2(n-1)}+2^{\log_2(n)}$\\
+	$= 1+2+4+8+\ldots+\frac{n}{2}+n$\\
+	$= 2n-1$\\
+	Therefore $\sum\limits_{i=0}^{ \log_2 (n) } 2^i \in \Theta(n)$\\
+\end{enumerate}
+
+
+\end{document}

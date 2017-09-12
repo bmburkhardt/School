@@ -1,0 +1,68 @@
+#!./kanchil.lua
+# guess.kch
+# Glenn G. Chappell
+# 26 Mar 2017
+#
+# For CS F331 / CSCE A331 Spring 2017
+# Kanchil Example: Number Guessing Game
+
+
+set %lo: 1        # Bottom of guessing range
+set %hi: 100      # Top of guessing range
+set %biggap: 10   # This far from guess: "much" too large/small
+set %randval: 57  # Number to guess (same value every time <sigh>)
+
+# Print opening message
+print "I'm thinking of a number from "
+print %lo
+print " to "
+print %hi
+print "." cr
+print "Try to guess it!" cr
+cr
+
+# Loop until correct guess
+set %notdone: true   # Boolean flag for while loop
+while %notdone
+    # Prompt & input
+    print "Type your guess: "
+    input %guess
+    cr
+
+    # Print guess
+    print "You guessed "
+    print %guess
+    print "." cr
+
+    # Print evaluation of guess
+    if %guess < %lo || %guess > %hi
+        print "But my number is somewhere from "
+        print %lo
+        print " to "
+        print %hi
+        print "." cr
+    else
+        print "That is "
+        if %guess <= %randval-%biggap
+            print "much too small!" cr
+        elseif %guess >= %randval+%biggap
+            print "much too large!" cr
+        elseif %guess < %randval
+            print "too small." cr
+        elseif %guess > %randval
+            print "too large." cr
+        else
+            print "right!" cr
+            print "Yay!!!" cr
+            # We're done
+            set %notdone: false  # &&&
+        end
+    end
+
+    # If guess was incorrect, print try-again message
+    if %notdone
+       cr
+       print "Try again." cr
+    end
+end
+

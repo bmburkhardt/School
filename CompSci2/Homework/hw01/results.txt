@@ -1,0 +1,30 @@
+hw1.cpp:38:30: warning: comparison of integers of different signs: 'int' and 'unsigned long' [-Wsign-compare]
+            for(int i = 0; i < idVec.size()-1; ++i)
+                           ~ ^ ~~~~~~~~~~~~~~
+hw1.cpp:76:2: warning: no newline at end of file [-Wnewline-eof]
+}
+ ^
+2 warnings generated.
+TESTS FOR getIdFromFile
+Tests with file having final newline:
+    Test: getIdFromFile return, file exists - passed
+    Test: getIdFromFile output, one name, in file - passed
+    Test: getIdFromFile return, can't open file - passed
+    Test: getIdFromFile output, two names, in file - passed
+    Test: getIdFromFile output, three names, one not in file - passed
+    Test: getIdFromFile output, several names, some repeated or out of order or not in file - passed
+Tests with file NOT having final newline:
+    Test: getIdFromFile return, file exists - passed
+    Test: getIdFromFile output, one name, in file - passed
+    Test: getIdFromFile return, can't open file - passed
+    Test: getIdFromFile output, two names, in file - passed
+    Test: getIdFromFile output, three names, one not in file - passed
+    Test: getIdFromFile output, several names, some repeated or out of order or not in file - passed
+TESTS FOR numberChase
+    Test: numberChase output, short example from assignment - passed
+    Test: numberChase output, longer example, in order - passed
+    Test: numberChase output, longer example, jumps around - passed
+
+All tests successful
+
+Press ENTER to quit 

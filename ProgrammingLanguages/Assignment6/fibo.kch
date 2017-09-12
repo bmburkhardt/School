@@ -1,0 +1,42 @@
+#!./kanchil.lua
+# fibo.kch
+# Glenn G. Chappell
+# 13 Feb 2017
+#
+# For CS F331 / CSCE A331 Spring 2017
+# Kanchil Example: Printing Fibonacci Numbers
+
+
+# Subroutine &fibo
+# Given %k, set %fibk to F(%k),
+# where F(n) = nth Fibonacci no.
+sub &fibo
+    set %a: 0  # Consecutive Fibos
+    set %b: 1
+    set %i: 0  # Loop counter
+    while %i < %k
+        set %c: %a+%b  # Advance
+        set %a: %b
+        set %b: %c
+        set %i: %i+1   # ++counter
+    end
+    set %fibk: %a  # Result
+end
+
+
+# Get number of Fibos to output
+print "How many Fibos to print: "
+input %n
+cr
+# Print requested number of Fibos
+set %j: 0  # Loop counter
+while %j < %n
+    set %k: %j
+    call &fibo
+    print "F("
+    print %j
+    print ") = "
+    print %fibk cr
+    set %j: %j + 1
+end
+

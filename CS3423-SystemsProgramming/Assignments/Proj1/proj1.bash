@@ -9,7 +9,7 @@
 
 # Ensure needed files have proper permissions
 chmod 700 create.bash
-chmod 700 find.bash
+chmod 700 findApt.bash
 chmod 700 payment.bash
 
 go=0

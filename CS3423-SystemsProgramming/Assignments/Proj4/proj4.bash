@@ -7,7 +7,7 @@
 #		commands to create emails for customers who owe money.
 
 # Ensures date passed to proj4.bash is of format MM/DD/YYYY.
-if [[ ! $ =~ [0-9][0-9]/[0-9][0-9]/[0-9][0-9][0-9][0-9]$ ]]; then
+if [[ ! $1 =~ [0-9][0-9]/[0-9][0-9]/[0-9][0-9][0-9][0-9]$ ]]; then
 	echo "Please enter correct date format: MM/DD/YYYY"
 	exit 1
 fi

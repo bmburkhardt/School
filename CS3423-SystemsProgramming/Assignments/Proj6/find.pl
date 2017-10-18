@@ -40,6 +40,7 @@ if($ARGV[0] eq "-i") {
 					last;
 				}
 			}
+			close(IN);
 			# Prints filename if regex does not match filename or anywhere in file
 			if($found == 0) {
 				print "$file\n";
@@ -71,6 +72,7 @@ else {
 					last;
 				}
 			}
+			close(IN);
 		}
 	}
 }
